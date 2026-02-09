@@ -406,8 +406,61 @@
             gap: 2rem;
             margin-bottom: 3rem;
         }
+        .projects-carousel-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;   /* center whole carousel */
+            max-width: 1200px;         /* controls how many cards show */
+            margin: 0 auto;   
+            }
 
+            .projects-carousel {
+            display: flex;
+            gap: 2rem;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            padding: 1rem 0;
+            width: 100%;
+            scrollbar-width: none;        /* Firefox */
+            scroll-snap-type: x mandatory;
+            margin: 0 auto;
+            }
+
+            .projects-carousel::-webkit-scrollbar {
+                display: none;                /* Chrome, Safari */
+                }
+
+        .carousel-btn {
+            background: none;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            }
+
+            .carousel-btn:hover {
+            background: var(--accent);
+            color: #000;
+            }
+
+            .carousel-btn.left {
+            position: absolute;
+            left: -60px;    
+            }
+
+            .carousel-btn.right {
+            position: absolute;
+            right: -60px;
+            }
+        
         .project-card {
+            flex: 0 0 520px;
+            scroll-snap-align: start;
             background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 0;
@@ -908,7 +961,10 @@
                     <div class="section-label">Featured Work</div>
                     <h2 class="section-title">Recent Projects</h2>
                 </div>
-                <div class="projects-grid">
+                <div class="projects-carousel-wrapper">
+                    <button class="carousel-btn left" aria-label="Previous">&#10094;</button>
+
+                     <div class="projects-carousel" id="projectsCarousel">
 
                     <article class="project-card fade-in-up stagger-1">
                         <a href="https://drive.google.com/file/d/1RKrRT5SBtPbP-n-Xh4MDE8JOWfU8YYNg/view?usp=sharing" target="_blank"><div class="project-image"><img src="images/nia_thesis.png" alt="Nia.One"></div></a>
@@ -937,6 +993,19 @@
                     </article>
 
                     <article class="project-card fade-in-up stagger-1">
+                        <a href="https://docs.google.com/document/d/1QNwsUyTg-pnkwXvHukfvbKwSzmZAeXRNmz85Dma2B78/edit?usp=sharing" target="_blank"><div class="project-image"><img src="images/lila.png" alt="LILA Games"></div></a>
+                        <div class="project-content">
+                            <h3 class="project-title">LILA Games APM</h3>
+                            
+                            <div class="project-tags">
+                                <span class="tag">Game Design</span>
+                                <span class="tag">User Acquisition</span>
+                                <span class="tag">Assets and Strategy   </span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card fade-in-up stagger-1">
                         <a href="https://drive.google.com/file/d/16kDt7yofjGzXOH3Z2lOYsT9Xr9MMMq5C/view?usp=sharing" target="_blank"><div class="project-image"><img src="images/bluesmart_teardown.png" alt="BlueSmart"></div></a>
                         <div class="project-content">
                             <h3 class="project-title">BluSmart Product Teardown</h3>
@@ -948,7 +1017,11 @@
                             </div>
                         </div>
                     </article>
+
                 </div>
+
+  <button class="carousel-btn right" aria-label="Next">&#10095;</button>
+</div>
             </div>
         </section>
 
@@ -1047,6 +1120,22 @@
       }, 1500);
     });
   });
+</script>
+
+<script>
+  const carousel = document.getElementById("projectsCarousel");
+  const card = carousel.querySelector(".project-card");
+
+  const gap = parseInt(getComputedStyle(carousel).gap);
+  const scrollAmount = card.offsetWidth + gap;
+
+  document.querySelector(".carousel-btn.left").onclick = () => {
+    carousel.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+  };
+
+  document.querySelector(".carousel-btn.right").onclick = () => {
+    carousel.scrollBy({ left: scrollAmount, behavior: "smooth" });
+  };
 </script>
 
 
